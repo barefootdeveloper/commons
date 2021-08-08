@@ -1,4 +1,4 @@
-import { v1 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { Environment } from '../models/environment.model';
 import { Header, Route, RouteResponse } from '../models/route.model';
 
@@ -323,12 +323,27 @@ export const Migrations: {
       }
     }
   },
+  /**
+   * Add route response's fallbackTo404 option.
+   */
+  {
+    id: 17,
+    migrationFunction: (environment: Environment) => {
+      environment.routes.forEach((route: Route) => {
+        route.responses.forEach((routeResponse) => {
+          if (routeResponse.fallbackTo404 === undefined) {
+            routeResponse.fallbackTo404 = false;
+          }
+        });
+      });
+    }
+  },
 
   /**
    * Add default response
    */
   {
-    id: 17,
+    id: 18,
     migrationFunction: (environment: Environment) => {
       environment.routes.forEach((route: Route) => {
         if (route.responses !== undefined && route.responses.length > 0) {
