@@ -322,6 +322,24 @@ export const Migrations: {
         environment.hostname = '0.0.0.0';
       }
     }
+  },
+
+  /**
+   * Add default response
+   */
+  {
+    id: 17,
+    migrationFunction: (environment: Environment) => {
+      environment.routes.forEach((route: Route) => {
+        if (route.responses !== undefined && route.responses.length > 0) {
+          route.responses.forEach((routeResponse, index) => {
+            if (routeResponse.default === undefined) {
+              routeResponse.default = index === 0;
+            }
+          });
+        }
+      });
+    }
   }
 ];
 

@@ -12,6 +12,7 @@ export type RouteResponse = {
   filePath: string;
   sendFileAsBody: boolean;
   disableTemplating: boolean;
+  default: boolean;
 };
 
 export type ResponseRule = {
